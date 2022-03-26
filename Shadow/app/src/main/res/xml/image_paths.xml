@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths xmlns:android="http://schemas.android.com/apk/res/android">
+<!--    <external-path-->
+<!--        name="image_paths"-->
+<!--        path="."/>-->
+    <external-path path="." name="sdcard_files" />
+    <!--相机相册裁剪-->
+    <external-files-path   path="file/" name="camera_has_sdcard"/>
+    <files-path path="."     name="camera_no_sdcard"/>
+</paths>

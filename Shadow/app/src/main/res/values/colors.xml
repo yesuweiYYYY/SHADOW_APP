@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bisque">#ffe4c4</color> <!-- 桔黄色 -->
+    <color name="ivory">#fffff0</color> <!-- 象牙色 -->
+    <color name="lightyellow">#ffffe0</color> <!-- 亮黄色 -->
+    <color name="yellow">#ffff00</color> <!-- 黄色 -->
+    <color name="snow">#fffafa</color> <!-- 雪白色 -->
+    <color name="floralwhite">#fffaf0</color> <!-- 花白色 -->
+    <color name="lemonchiffon">#fffacd</color> <!-- 柠檬绸色 -->
+    <color name="cornsilk">#fff8dc</color> <!-- 米绸色 -->
+    <color name="seaShell">#fff5ee</color> <!-- 海贝色 -->
+    <color name="lavenderblush">#fff0f5</color> <!-- 淡紫红 -->
+    <color name="papayawhip">#ffefd5</color> <!-- 番木色 -->
+    <color name="blanchedalmond">#ffebcd</color> <!-- 白杏色 -->
+    <color name="mistyrose">#ffe4e1</color> <!-- 浅玫瑰色 -->
+    <color name="moccasin">#ffe4b5</color> <!-- 鹿皮色 -->
+    <color name="firebrick">#b22222</color> <!-- 火砖色 -->
+    <color name="powderblue">#b0e0e6</color> <!-- 粉蓝色 -->
+    <color name="lightsteelblue">#b0c4de</color> <!-- 亮钢兰色 -->
+    <color name="paleturquoise">#afeeee</color> <!-- 苍宝石绿 -->
+    <color name="greenyellow">#adff2f</color> <!-- 黄绿色 -->
+    <color name="lightblue">#add8e6</color> <!-- 亮蓝色 -->
+    <color name="gray">#c0c0c0</color>
+    <color name="blue">#1b88fe</color>
+
+
+
+    <color name="steelblue">#4682b4</color> <!-- 钢兰色 -->
+    <color name="royalblue">#4169e1</color> <!-- 皇家蓝 -->
+    <color name="mediumseagreen">#3cb371</color> <!-- 中海蓝 -->
+    <color name="seagreen">#2e8b57</color> <!-- 海绿色 -->
+    <color name="forestgreen">#228b22</color> <!-- 森林绿 -->
+    <color name="lightseagreen">#20b2aa</color> <!-- 亮海蓝色 -->
+    <color name="dodgerblue">#1e90ff</color> <!-- 闪兰色 -->
+    <color name="darkturquoise">#00ced1</color> <!-- 暗宝石绿 -->
+    <color name="deepskyblue">#00bfff</color> <!-- 深天蓝色 -->
+    <color name="darkcyan">#008b8b</color> <!-- 暗青色 -->
+    <color name="teal">#008080</color> <!-- 水鸭色 -->
+
+
+
+
+</resources>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/drawable/shape_corner.xml" value="0.2520833333333333" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/drawable/textview_border.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/activity_main.xml" value="0.34739583333333335" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/info.xml" value="0.2916666666666667" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/login.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/main_layout.xml" value="0.27247191011235955" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/map.xml" value="0.20364583333333333" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/popupwindow_photo_style_layout.xml" value="0.20923913043478262" />
+        <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/register.xml" value="0.3458333333333333" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/activity_main.xml" value="0.21603260869565216" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/info.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/login.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/main_layout.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/popupwindow_photo_style_layout.xml" value="0.25905797101449274" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/register.xml" value="0.17806484295845998" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/xml/network_security_config.xml" value="0.24739583333333334" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow2/Shadow/app/src/main/res/layout/activity_main.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow2/Shadow/app/src/main/res/layout/info.xml" value="0.36614583333333334" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/Shadow2/Shadow/app/src/main/res/layout/main_layout.xml" value="0.36614583333333334" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

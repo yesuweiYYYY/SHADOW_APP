@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/b1">
+
+        <ImageView
+            android:id="@+id/id_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@+id/logusername_text"
+            android:layout_marginTop="1dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_toStartOf="@+id/logusername_text"
+            android:layout_toLeftOf="@+id/logusername_text"
+            android:src="@drawable/id" />
+
+        <EditText
+            android:id="@+id/logusername_text"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="268dp"
+            android:layout_marginEnd="94dp"
+            android:layout_marginRight="94dp"
+            android:background="@color/seaShell"
+            android:hint=" 用户名" />
+
+        <ImageView
+            android:id="@+id/passward_img"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_below="@id/id_img"
+            android:layout_alignLeft="@id/id_img"
+            android:layout_marginLeft="-2dp"
+            android:layout_marginTop="51dp"
+            android:src="@drawable/passward" />
+
+        <EditText
+            android:id="@+id/logpassward_text"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_alignTop="@id/passward_img"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="1dp"
+            android:layout_toRightOf="@id/passward_img"
+            android:background="@color/ivory"
+            android:hint=" 密码"
+            android:inputType="textPassword" />
+
+        <Button
+            android:id="@+id/log_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logpassward_text"
+            android:layout_marginTop="62dp"
+            android:layout_alignLeft="@id/passward_img"
+
+            android:text="登录" />
+
+        <Button
+            android:id="@+id/register_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/log_btn"
+
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginRight="20dp"
+            android:layout_toRightOf="@id/log_btn"
+            android:text="注册" />
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
