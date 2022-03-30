@@ -41,7 +41,7 @@ public class CompassView extends View implements Runnable{
     public CompassView(Context context) {
         this(context, null);
     }
-
+// 设置宽高
     public CompassView(Context context, AttributeSet attrs) {
         super(context, attrs);
         sWidth = ScreenUtil.getScreenW(context);

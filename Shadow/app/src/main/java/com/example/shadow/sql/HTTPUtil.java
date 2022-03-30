@@ -23,7 +23,7 @@ public class HTTPUtil {
     String res;
     public int int_res;
     public localtion[] locations_res;
-
+// 登录
     public int log(String username,String password){
         OkHttpClient client = new OkHttpClient();
         // 创建表单
@@ -68,7 +68,7 @@ public class HTTPUtil {
         }
         return int_res;
     }
-
+// 注册
     public int register(User s){
 
         OkHttpClient client = new OkHttpClient();
@@ -125,13 +125,11 @@ public class HTTPUtil {
         return int_res;
     }
 
-
+// 返回个人消息
     public localtion init_me(String username){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
-//
-        Request request = new Request.Builder().url("http://10.0.2.2:5000/location/"+"11").post(formBuilder.build()).build();
-//
+        Request request = new Request.Builder().url("http://10.0.2.2:5000/location_me/"+username).post(formBuilder.build()).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -161,12 +159,12 @@ public class HTTPUtil {
         }
         return locations_res[0];
     }
-
-    public localtion[] init_other() {
+// 返回所有人的消息
+    public localtion[] init_other(String username) {
         OkHttpClient client = new OkHttpClient();
-        String sql1="select orient,distance from location ";
+        FormBody.Builder formBuilder= new FormBody.Builder();
         Log.d("OKP get", "");
-        Request request = new Request.Builder().url("http://10.0.2.2:5000/location").get().build();
+        Request request = new Request.Builder().url("http://10.0.2.2:5000/location_other/"+username).post(formBuilder.build()).build();
         Call call2 = client.newCall(request);
         call2.enqueue(new Callback() {
             @Override
@@ -198,4 +196,8 @@ public class HTTPUtil {
         }
         return locations_res;
     }
+
+
+
+
 }

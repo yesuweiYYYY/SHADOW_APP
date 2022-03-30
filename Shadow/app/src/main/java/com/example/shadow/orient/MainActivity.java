@@ -62,8 +62,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ResultSet resultSet1;
     double orient_result;
     double distance_result;
+    double x_result;
+    double y_result;
     private ArrayList<Double> orients=new ArrayList<>();
     private ArrayList<Double> distances=new ArrayList<>();
+    private ArrayList<Double> xs=new ArrayList<>();
+    private ArrayList<Double> ys=new ArrayList<>();
     private ArrayList<double[]> locofphone=new ArrayList<>();
     private localtion[] localtions;
     private float ori=0;
@@ -74,7 +78,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         init();
+//        ?
         cView = new CompassView(MainActivity.this);
+
         cView.setUsername(username);
         cView.post(new Runnable() {
             @Override
@@ -84,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Log.d("wwwwwwwwwwwwww",view_width+"       "+view_height);
             }
         });
+//  ?
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorOrientation = sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sManager.registerListener(this, mSensorOrientation, SensorManager.SENSOR_DELAY_UI);
@@ -111,30 +118,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Button setinfo=(Button)findViewById(R.id.main_getinfo);
         setinfo.setOnClickListener(this);
 
-        Log.d("mainsql",username);
         new Thread(runnable1).start();
     }
 
     public void init_me(){
 
         HTTPUtil tmp_http= new HTTPUtil();
-//
-        data_struct.localtion me_loc = tmp_http.init_me("11");
-        orient_result=me_loc.orient;distance_result=me_loc.distance;
-//
+        data_struct.localtion me_loc = tmp_http.init_me(username);
+        orient_result=me_loc.x;distance_result=me_loc.y;
 
     }
     public void init_other(){
         HTTPUtil tmp_http= new HTTPUtil();
-//
-        data_struct.localtion[] me_loc = tmp_http.init_other();
 
-        for(data_struct.localtion i:me_loc){
-            orients.add(Double.valueOf(i.orient));
-            distances.add(Double.valueOf(i.distance));
+        data_struct.localtion[] other_loc = tmp_http.init_other(username);
+
+        for(data_struct.localtion i:other_loc){
+            xs.add(i.x);ys.add(i.y);
         }
 
     }
+
     Runnable runnable1=new Runnable() {
         @Override
         public void run() {
@@ -148,17 +152,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     //orient 表示o1与o正北方向夹角
     //distance 表示两者之间的距离
     private void getlocationinfo(){
-
-        connection= SQLUtil.openConnection();
-
-//        String sql="select orient,distance from location where username='"+username+"'";
-        //String sql="select password from user where username='"+username+"'";
-//        resultSet=SQLUtil.query(connection,sql);
         init_me();
         init_other();
-
-
-
     }
     private void getinfo(){
         connection= SQLUtil.openConnection();
@@ -235,22 +230,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 
         int[] location = new int[2];
+//        屏幕中间
+        Log.d("d",String.valueOf(view_width));
+        Log.d("d",String.valueOf(view_height));
         location[0]=view_width/2;
         location[1]=view_height;
 
         locofphone.clear();
-        for(int i=0;i<orients.size();i++){
-            double theta=orients.get(i)-ori;
+        for(int i=0;i<xs.size();i++){
+            // 角度差
             //Log.d("sizaae","pppppp"+Math.abs(theta%360));
-            if(Math.abs(theta)<90||Math.abs(theta)>270) {
-                theta=Math.toRadians(theta);
-                double[] d = new double[2];
-                d[0] =(double)(int)((distances.get(i) *Math.sin(theta)*100 ) + location[0]);
-                d[1] = (double)(int)(location[1] - (distances.get(i) * Math.cos(theta)*100));
+            // +- 90 °之内
+
+            double[] d = new double[2];
+//                d[0] =(double)(int)((distances.get(i) *Math.sin(theta)*100 ) + location[0]);
+//                d[1] = (double)(int)(location[1] - (distances.get(i) * Math.cos(theta)*100));
+
+            d[1]=(xs.get(i)-x_result)*100+location[0];
+            d[0]=+location[1]-(ys.get(i)-y_result)*100;
+            if(d[1]>0){
                 locofphone.add(d);
-                Log.d("ssssssssssssssize","theta" + theta + "   num"+distances.get(i)+"  "+d[0]+"   "+d[1]);
+                Log.d("ssssssssssssssize", "   num"+"  "+d[0]+"   "+d[1]);
             }
         }
+
 
 
     }

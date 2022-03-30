@@ -2,11 +2,11 @@ package data_struct;
 
 public class localtion {
     public String usrname;
-    public int orient;
-    public int distance;
-    public localtion(String usrname, int orient, int distance){
+    public double x;
+    public double y;
+    public localtion(String usrname, double x,double y){
         this.usrname=usrname;
-        this.orient=orient;
-        this.distance=distance;
+        this.x=x;
+        this.y=y;
     }
 }
