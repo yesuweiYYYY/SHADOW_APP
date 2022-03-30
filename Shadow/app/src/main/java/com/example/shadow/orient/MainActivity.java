@@ -59,17 +59,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private String username="11";
     private Connection connection;
     private ResultSet resultSet;
-    private ResultSet resultSet1;
     double orient_result;
     double distance_result;
     double x_result;
     double y_result;
-    private ArrayList<Double> orients=new ArrayList<>();
-    private ArrayList<Double> distances=new ArrayList<>();
     private ArrayList<Double> xs=new ArrayList<>();
     private ArrayList<Double> ys=new ArrayList<>();
     private ArrayList<double[]> locofphone=new ArrayList<>();
-    private localtion[] localtions;
     private float ori=0;
     Bitmap image_bitmap;
     private int view_width=0,view_height=0;
@@ -78,7 +74,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
         init();
-//        ?
+//       ?
         cView = new CompassView(MainActivity.this);
 
         cView.setUsername(username);
@@ -238,14 +234,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         locofphone.clear();
         for(int i=0;i<xs.size();i++){
-            // 角度差
-            //Log.d("sizaae","pppppp"+Math.abs(theta%360));
-            // +- 90 °之内
-
             double[] d = new double[2];
-//                d[0] =(double)(int)((distances.get(i) *Math.sin(theta)*100 ) + location[0]);
-//                d[1] = (double)(int)(location[1] - (distances.get(i) * Math.cos(theta)*100));
-
             d[1]=(xs.get(i)-x_result)*100+location[0];
             d[0]=+location[1]-(ys.get(i)-y_result)*100;
             if(d[1]>0){

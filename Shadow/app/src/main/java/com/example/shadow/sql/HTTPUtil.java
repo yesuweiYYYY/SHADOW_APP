@@ -18,8 +18,6 @@ import com.google.gson.Gson.*;
 
 public class HTTPUtil {
     private static final String host_URL = "http://10.0.2.2:5000/";
-
-
     String res;
     public int int_res;
     public localtion[] locations_res;
