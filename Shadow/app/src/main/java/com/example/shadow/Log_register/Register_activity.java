@@ -64,8 +64,10 @@ import okhttp3.*;
 
 public class Register_activity extends AppCompatActivity implements View.OnClickListener{
     // 一些参数
-
+    private String sex="-1";
     private RadioGroup regsex;
+    private RadioButton boy;
+    private RadioButton girl;
 
     User myuser;
 
@@ -107,8 +109,8 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        head=(ImageView) findViewById(R.id.iv_personal_icon);
-        head.setOnClickListener(this);
+        head=(ImageView) findViewById(R.id.iv_personal_icon);//头像
+        head.setOnClickListener(this);//
         ok= (Button) findViewById(R.id.regok);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -154,17 +156,29 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
 
     private void register(){
         // 数据绑定
+        regsex= (RadioGroup) findViewById(R.id.regsex_radiogroup);
+        regsex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.regboy:sex="男";
+                    case R.id.regirl:sex="女";
+                }
+            }
+        });
+        Log.d("reg",sex);
+
         myuser = new User(
                 ( (EditText) findViewById(R.id.regusername_text)      ).getText().toString(),
                 ((EditText) findViewById(R.id.regpassword_text)       ).getText().toString(),
 //
-                "1",
+                sex,
 //
                 ( (EditText) findViewById(R.id.regage_text)           ).getText().toString(),
                 (  (EditText) findViewById(R.id.regphone_text)        ).getText().toString(),
                 ( (TextView)findViewById(R.id.description)            ).getText().toString(),
 //
-                "1"
+                image
 //
         );
 
@@ -178,18 +192,8 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
             return;
         }
 
-//
-//        regsex= (RadioGroup) findViewById(R.id.regsex_radiogroup);
-//        regsex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                switch (checkedId){
-//                    case R.id.regboy:sex="男";
-//                    case R.id.regirl:sex="女";
-//                }
-//            }
-//        });
-//
+
+
 
         //图片上传
 
@@ -204,16 +208,16 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
         Log.d("resgister:",String.valueOf(res));
         if(res == 1){
             pass=true;
-                    ToastmakeText("注册成功");
-                    //1.5秒后跳转活动
-                    TimerTask task = new TimerTask() {
-                        @Override
-                        public void run() {
-                            finish();
-                        }
-                    };
-                    Timer timer = new Timer();
-                    timer.schedule(task, 1500);//1.5秒后执行TimeTask的run方法
+            ToastmakeText("注册成功");
+            //1.5秒后跳转活动
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    finish();
+                }
+            };
+            Timer timer = new Timer();
+            timer.schedule(task, 1500);//1.5秒后执行TimeTask的run方法
         }else if(res == 2){
             ToastmakeText("注册失败,账户已存在");
         }

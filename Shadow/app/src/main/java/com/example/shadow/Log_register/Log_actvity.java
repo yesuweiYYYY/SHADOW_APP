@@ -38,8 +38,6 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
     boolean b=false;
     Button register;
     Button log;
-    //连接数据库
-//    加密函数
     Runnable runnable1=new Runnable() {
         @Override
         public void run() {

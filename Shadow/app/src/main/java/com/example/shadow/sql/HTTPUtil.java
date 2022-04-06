@@ -33,7 +33,7 @@ public class HTTPUtil {
 
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
-            //          没有收到服务器应答
+            //没有收到服务器应答
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d("info_OKP_login", "onFailure: " + e.getMessage());
@@ -78,7 +78,8 @@ public class HTTPUtil {
         formBuilder.add("age",s.age);
         formBuilder.add("phone",s.phone);
         formBuilder.add("description",s.descrption);
-        formBuilder.add("sex","1");
+        formBuilder.add("sex",s.sex);
+        formBuilder.add("image",s.image);
         Request request = new Request.Builder().url(
                 "http://10.0.2.2:5000/register"
         ).post(formBuilder.build()).build();
