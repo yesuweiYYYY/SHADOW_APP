@@ -17,7 +17,9 @@ import com.google.gson.Gson;
 import com.google.gson.Gson.*;
 
 public class HTTPUtil {
-    private static final String host_URL = "http://10.0.2.2:5000/";
+//    private static final String host_URL = host_URL+"";
+    private static final String host_URL = "http://120.26.86.113:5000/";
+
     String res;
     public int int_res;
     public localtion[] locations_res;
@@ -81,7 +83,7 @@ public class HTTPUtil {
         formBuilder.add("sex",s.sex);
         formBuilder.add("image",s.image);
         Request request = new Request.Builder().url(
-                "http://10.0.2.2:5000/register"
+                host_URL+"register"
         ).post(formBuilder.build()).build();
 
 
@@ -128,7 +130,7 @@ public class HTTPUtil {
     public localtion init_me(String username){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
-        Request request = new Request.Builder().url("http://10.0.2.2:5000/location_me/"+username).post(formBuilder.build()).build();
+        Request request = new Request.Builder().url(host_URL+"location_me/"+username).post(formBuilder.build()).build();
         Call call = client.newCall(request);
         call.enqueue(new Callback() {
             @Override
@@ -163,7 +165,7 @@ public class HTTPUtil {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
         Log.d("OKP get", "");
-        Request request = new Request.Builder().url("http://10.0.2.2:5000/location_other/"+username).post(formBuilder.build()).build();
+        Request request = new Request.Builder().url(host_URL+"location_other/"+username).post(formBuilder.build()).build();
         Call call2 = client.newCall(request);
         call2.enqueue(new Callback() {
             @Override
