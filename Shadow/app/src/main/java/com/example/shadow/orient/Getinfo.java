@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.shadow.MainActivity;
 import com.example.shadow.R;
 import com.example.shadow.ShadowApplication;
+import com.example.shadow.sql.HTTPUtil;
 import com.example.shadow.sql.SQLUtil;
 
 import java.io.BufferedInputStream;
@@ -56,6 +57,8 @@ import java.sql.Connection;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import data_struct.User;
+
 public class Getinfo extends AppCompatActivity {
     private Connection connection;
     private EditText info_username;
@@ -63,12 +66,10 @@ public class Getinfo extends AppCompatActivity {
     private EditText info_phone;
     private EditText info_sex;
     private TextView info_description;
+    private ImageView info_personal_icon;
     private ResultSet resultSet;
+    User user;
     String username;
-    String age;
-    String phone;
-    String description;
-    String sex;
     Bitmap image_bitmap;
 
 
@@ -96,18 +97,18 @@ public class Getinfo extends AppCompatActivity {
     private void setText(){
         Log.d("info","setText");
         info_username= (EditText) findViewById(R.id.info_username);
-        info_username.setText(username);
+        info_username.setText(user.username);
 
         info_age= (EditText) findViewById(R.id.info_age);
-        info_age.setText(age);
+        info_age.setText(user.age);
         info_phone= (EditText) findViewById(R.id.info_phone);
-        info_phone.setText(phone);
+        info_phone.setText(user.phone);
         info_sex= (EditText) findViewById(R.id.info_sex);
-        info_sex.setText(sex);
+        info_sex.setText(user.sex);
         info_description=(TextView)findViewById(R.id.info_description) ;
-        info_description.setText(description);
-
-
+        info_description.setText(user.descrption);
+        info_personal_icon=(ImageView)findViewById(R.id.info_personal_icon);
+        info_personal_icon.setImageBitmap(image_bitmap);
 
 
 
@@ -134,37 +135,13 @@ public class Getinfo extends AppCompatActivity {
         };
     };
     private void getinfo(){
-        connection= SQLUtil.openConnection();
-
-        String sql="select sex,age,phone,description,image from user where username='"+username+"'";
-        resultSet=SQLUtil.query(connection,sql);
-        if(resultSet==null) {
-            //Toast.makeText(MainActivity, "不存在此用户名", Toast.LENGTH_SHORT).show();
-            Log.d("sql","location查询结果为空");
-            return ;
-        }else{
-            Log.d("sql","location ok!");
-        }
-
-        try {
-            sex=resultSet.getString("sex");
-            age=resultSet.getString("age");
-            phone=resultSet.getString("phone");
-            description=resultSet.getString("description");
-            String imagestring=resultSet.getString("image");
-            image_bitmap=stringToBitmap(imagestring);
+            HTTPUtil httpUtil = new HTTPUtil();
+            user = httpUtil.info(username);
+            image_bitmap=stringToBitmap(user.image);
             Message message = new Message();
             message.what = 1;
             // 发送消息到消息队列中
             handler.sendMessage(message);
-
-        } catch (SQLException e) {
-            Message message = new Message();
-            message.what = -1;
-            handler.sendMessage(message);
-            e.printStackTrace();
-            e.printStackTrace();
-        }
         setText();
 
 

@@ -61,11 +61,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ResultSet resultSet;
     double orient_result;
     double distance_result;
-    double x_result;
-    double y_result;
     private ArrayList<Double> xs=new ArrayList<>();
     private ArrayList<Double> ys=new ArrayList<>();
     private ArrayList<double[]> locofphone=new ArrayList<>();
+    private ArrayList<localtion> locainfo_other=new ArrayList<localtion>();
+    private boolean locainfoupdate=false;
     private float ori=0;
     Bitmap image_bitmap;
     private int view_width=0,view_height=0;
@@ -73,6 +73,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_layout);
+        locainfoupdate=false;
         init();
 //       ?
         cView = new CompassView(MainActivity.this);
@@ -94,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         LinearLayout ll = (LinearLayout)findViewById(R.id.container);
         ll.addView(cView);
 
-          //setContentView(cView);
+//          setContentView(cView);
 
     }
 
@@ -129,9 +130,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         data_struct.localtion[] other_loc = tmp_http.init_other(username);
 
+//        locainfo_other.clear();
         for(data_struct.localtion i:other_loc){
             xs.add(i.x);ys.add(i.y);
+            locainfo_other.add(i);
         }
+        locainfoupdate=false;
 
     }
 
@@ -232,16 +236,35 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         location[0]=view_width/2;
         location[1]=view_height;
 
-        locofphone.clear();
-        for(int i=0;i<xs.size();i++){
-            double[] d = new double[2];
-            d[1]=(xs.get(i)-x_result)*100+location[0];
-            d[0]=+location[1]-(ys.get(i)-y_result)*100;
-            if(d[1]>0){
-                locofphone.add(d);
-                Log.d("ssssssssssssssize", "   num"+"  "+d[0]+"   "+d[1]);
+
+
+
+        if(!locainfoupdate){
+            locainfoupdate=true;
+
+            for(localtion i:locainfo_other){
+                Log.d("ssssssssssssssize", "   num"+"  "+i.x+"   "+i.y);
+                i.x=(i.x)*100+location[0];
+                i.y=location[1]-i.y*100;
+                double t=i.x;i.x=i.y;i.y=t;
+                Log.d("ssssssssssssssize", "   num"+"  "+i.x+"   "+i.y);
             }
         }
+        for(localtion i:locainfo_other)
+            Log.d("ssssssssssssssize", "   num"+"  "+i.x+"   "+i.y);
+
+
+//        locofphone.clear();
+//        for(int i=0;i<xs.size();i++){
+//            double[] d = new double[2];
+//            Log.d("ssssssssssssssize2", "   num"+"  "+xs.get(i)+"   "+ys.get(i));
+//            d[1]=(xs.get(i))*100+location[0];
+//            d[0]=location[1]-(ys.get(i))*100;
+//            if(d[1]>0){
+//                locofphone.add(d);
+//                Log.d("ssssssssssssssize2", "   num"+"  "+d[0]+"   "+d[1]);
+//            }
+//        }
 
 
 
@@ -254,8 +277,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         cView.setDegree(event.values[0]);
         ori=event.values[0];
         neighborloc();
-        //Log.d("hua","iiiii"+event.values[0]+"   "+locofphone.size());
-        cView.setLocofphone(locofphone);
+        cView.setLoca_indo(this.locainfo_other);
     }
 
     @Override
@@ -273,8 +295,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.main_getinfo:
-                    //Intent intent0=new Intent(Log_actvity.this,MainActivity.class);
-                    //intent0.putExtra("username",username);
                     Intent intent0=new Intent(MainActivity.this,Getinfo.class);
                     startActivity(intent0);
                 break;

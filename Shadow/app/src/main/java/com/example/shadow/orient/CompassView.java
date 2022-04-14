@@ -22,13 +22,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import data_struct.*;
 /**
  * Created by Jay on 2015/11/14 0014.
  */
 public class CompassView extends View implements Runnable{
 
-    private ArrayList<Double> orients=new ArrayList<>();
-    private ArrayList<Double> distances=new ArrayList<>();
+    private ArrayList<localtion> loca_info=new ArrayList<>();
     private ArrayList<double[]> locofphone=new ArrayList<>();
 
     private String username="null";
@@ -64,6 +64,9 @@ public class CompassView extends View implements Runnable{
     public void setLocofphone(ArrayList<double[]> locofphone) {
         this.locofphone = locofphone;
     }
+    public void setLoca_indo(ArrayList<localtion> loco_info) {
+        this.loca_info = loco_info;
+    }
     public String getUsername() {
         return username;
     }
@@ -87,6 +90,10 @@ public class CompassView extends View implements Runnable{
 
         canvas.drawText(msg, sWidth * 1/3 , sWidth*4/3, mTextPaint);
         canvas.drawCircle(1080,1622,40,mTextPaint);
+
+        for (localtion i:loca_info)
+            canvas.drawCircle((float) i.y,(float)i.x, 30,mTextPaint);
+
         if (locofphone != null) {
             for (int i = 0; i < locofphone.size(); i++) {
                 canvas.drawCircle((float) locofphone.get(i)[0], (float) locofphone.get(i)[1], 30, mTextPaint);

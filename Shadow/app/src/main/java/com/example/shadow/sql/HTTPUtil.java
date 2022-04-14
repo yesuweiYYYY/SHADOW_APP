@@ -23,6 +23,7 @@ public class HTTPUtil {
     String res;
     public int int_res;
     public localtion[] locations_res;
+    public User[] user_res;
 // 登录
     public int log(String username,String password){
         OkHttpClient client = new OkHttpClient();
@@ -198,7 +199,40 @@ public class HTTPUtil {
         return locations_res;
     }
 
+    // 返回个人消息
+    public User info(String username){
+        OkHttpClient client = new OkHttpClient();
+        FormBody.Builder formBuilder= new FormBody.Builder();
+        Request request = new Request.Builder().url(host_URL+"info/"+username).post(formBuilder.build()).build();
+        Call call = client.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message message = Message.obtain();
+                message.what = 0;
+                message.obj = e.getMessage();
+                Log.d("OKP", "onFailure: " + message.obj.toString());
+            }
 
+            @Override
+            public void onResponse(Call call, okhttp3.Response response) throws IOException {
+                Message message = Message.obtain();
+                message.what = 1;
+                message.obj = response.body().string();//string不能调用两次 被调用一次就关闭了，这里调用两次会报异常
+                Log.d("OKP", "response: " + message.obj.toString());
+
+                Gson gson = new Gson();
+                user_res = gson.fromJson(message.obj.toString(), User[].class);
+            }
+        });
+        // 等一下线程恢复
+        try {
+            Thread.sleep(1000); //1000 毫秒，也就是1秒.
+        } catch(InterruptedException ex) {
+            Thread.currentThread().interrupt();
+        }
+        return user_res[0];
+    }
 
 
 }
