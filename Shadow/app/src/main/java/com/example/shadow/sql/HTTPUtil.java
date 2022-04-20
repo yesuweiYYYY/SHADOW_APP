@@ -162,7 +162,7 @@ public class HTTPUtil {
         return locations_res[0];
     }
 // 返回所有人的消息
-    public localtion[] init_other(String username) {
+    public  localtion[] init_other(String username) {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
         Log.d("OKP get", "");
@@ -200,7 +200,7 @@ public class HTTPUtil {
     }
 
     // 返回个人消息
-    public User info(String username){
+    public  User info(String username){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
         Request request = new Request.Builder().url(host_URL+"info/"+username).post(formBuilder.build()).build();

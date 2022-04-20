@@ -1,2 +1,4 @@
-package com.example.shadow.orient;public class CompassView2 {
+package com.example.shadow.orient;
+
+public class CompassView2 {
 }
