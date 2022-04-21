@@ -165,7 +165,7 @@ public class HTTPUtil {
     public  localtion[] init_other(String username) {
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
-        Log.d("OKP get", "");
+        Log.d("OKP get", "init_other");
         Request request = new Request.Builder().url(host_URL+"location_other/"+username).post(formBuilder.build()).build();
         Call call2 = client.newCall(request);
         call2.enqueue(new Callback() {
@@ -182,7 +182,7 @@ public class HTTPUtil {
                 Message message = Message.obtain();
                 message.what = 1;
                 message.obj = response.body().string();//string不能调用两次 被调用一次就关闭了，这里调用两次会报异常
-                Log.d("OKP", "response: " + message.obj.toString());
+                Log.d("OKP_init_other","response: " + message.obj.toString());
 
                 Gson gson = new Gson();
                 locations_res= gson.fromJson(message.obj.toString(), localtion[].class);

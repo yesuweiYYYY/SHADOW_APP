@@ -1,72 +1,42 @@
 package com.example.shadow.orient;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.util.Base64;
 import android.util.Log;
-import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
-import android.widget.FrameLayout;
+import android.widget.GridLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.shadow.Log_register.Log_actvity;
 import com.example.shadow.Log_register.Register_activity;
 import com.example.shadow.R;
 import com.example.shadow.ShadowApplication;
 import com.example.shadow.sql.HTTPUtil;
-import com.example.shadow.sql.SQLUtil;
 
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-
-import okhttp3.*;
-
-import com.google.gson.Gson;
-import com.google.gson.Gson.*;
 
 import data_struct.*;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener,View.OnClickListener {
 
-    private CompassView cView;
-    private SensorManager sManager;
-    private Sensor mSensorOrientation;
     private String username="11";
-    private Connection connection;
-    private ResultSet resultSet;
-    double orient_result;
-    double distance_result;
-    private ArrayList<Double> xs=new ArrayList<>();
-    private ArrayList<Double> ys=new ArrayList<>();
-    private ArrayList<double[]> locofphone=new ArrayList<>();
+
     private ArrayList<localtion> locainfo_other=new ArrayList<localtion>();
+    private localtion localtion_me=new localtion();
+
     private boolean locainfoupdate=false;
-    private float ori=0;
     Bitmap image_bitmap;
     private int view_width=0,view_height=0;
     @Override
@@ -75,27 +45,82 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         setContentView(R.layout.main_layout);
         locainfoupdate=false;
         init();
-//       ?
-        cView = new CompassView(MainActivity.this);
 
-        cView.setUsername(username);
-        cView.post(new Runnable() {
-            @Override
-            public void run() {
-                view_width=cView.getWidth(); // 获取宽度
-                view_height=cView.getHeight(); // 获取高度
-                Log.d("wwwwwwwwwwwwww",view_width+"       "+view_height);
+
+        // 初始化布局
+        // 容器
+        GridLayout container =findViewById(R.id.container);
+        // layout 配置器
+        GridLayout.LayoutParams LP=new GridLayout.LayoutParams();
+        LP.height=150;
+        LP.width=150;
+        // 基站
+        ImageView base_station=new ImageView(MainActivity.this);
+        base_station.setImageResource(R.mipmap.base);
+        LP.rowSpec=GridLayout.spec(0);LP.columnSpec=GridLayout.spec(9);
+        base_station.setLayoutParams(LP);
+        container.addView(base_station);
+        int[][] vis=new int[13][9];
+        for(int i=0;i<13;i++)for(int j=0;j<9;j++)vis[i][j]=-1;
+
+        for(int i=0;i<locainfo_other.size();i++){
+            int x=(int)(Math.round(locainfo_other.get(i).x));
+            int y=(int)(Math.round(locainfo_other.get(i).y));
+            Log.d("locations:","x-"+String.valueOf(x)+",y-"+String.valueOf(y));
+            if(x>=0&&x<9&&y>=0&&y<=9){
+                vis[x][y]=i;
             }
-        });
-//  ?
-        sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
-        mSensorOrientation = sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
-        sManager.registerListener(this, mSensorOrientation, SensorManager.SENSOR_DELAY_UI);
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.container);
-        ll.addView(cView);
+        }
 
-//          setContentView(cView);
+        {
+            int x=(int)(Math.round(localtion_me.x));
+            int y=(int)(Math.round(localtion_me.y));
+            if(x>=0&&x<9&&y>=0&&y<=9) vis[x][y]=-2;
+        }
+
+        for(int i=1;i<10;i++){
+            for(int j=0;j<9;j++){
+//                Params 配置器
+                GridLayout.LayoutParams LP2=new GridLayout.LayoutParams();
+                LP2.height=100;
+                LP2.width=100;
+                LP2.rowSpec=GridLayout.spec(i);LP2.columnSpec=GridLayout.spec(j);
+//              配置
+                Button bt=new Button(MainActivity.this);
+                bt.setBackgroundResource(R.drawable.shape_circle_blue);
+                bt.setLayoutParams(LP2);
+                bt.setVisibility(View.INVISIBLE);
+//              绑定点击事件
+                if(vis[i][j]!=-1){
+                    bt.setVisibility(View.VISIBLE);
+                    Log.d("make_click_buttun","x-"+String.valueOf(i)+"y-"+String.valueOf(j));
+                    if(vis[i][j]==-2){
+                        bt.setBackgroundResource(R.drawable.shape_circle_green);
+                        bt.setText(localtion_me.username.substring(0,1));
+                    }else{
+                        bt.setBackgroundResource(R.drawable.shape_circle_blue);
+                        bt.setText(locainfo_other.get(vis[i][j]).username.substring(0,1));
+                    }
+                    bt.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent0=new Intent(MainActivity.this,Getinfo.class);
+                            startActivity(intent0);
+                        }
+                    });
+
+                }
+
+                container.addView(bt);
+            }
+        }
+
+
+
+
+//        setContent(bt);
+//        contain.addView(testImageView);
 
     }
 
@@ -114,16 +139,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         getinfo.setOnClickListener(this);
         Button setinfo=(Button)findViewById(R.id.main_getinfo);
         setinfo.setOnClickListener(this);
-
-        new Thread(runnable1).start();
+        init_me();
+        init_other();
+//        new Thread(runnable1).start();
     }
 
     public void init_me(){
-
         HTTPUtil tmp_http= new HTTPUtil();
-        data_struct.localtion me_loc = tmp_http.init_me(username);
-        orient_result=me_loc.x;distance_result=me_loc.y;
-
+        localtion_me = tmp_http.init_me(username);
     }
     public void init_other(){
         HTTPUtil tmp_http= new HTTPUtil();
@@ -132,11 +155,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
 //        locainfo_other.clear();
         for(data_struct.localtion i:other_loc){
-            xs.add(i.x);ys.add(i.y);
+            Log.d("init_other",i.toString());
             locainfo_other.add(i);
         }
-        locainfoupdate=false;
-
     }
 
     Runnable runnable1=new Runnable() {
@@ -144,7 +165,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         public void run() {
             Looper.prepare();
             getlocationinfo();
-            getinfo();
             Looper.loop();
         }
     };
@@ -155,39 +175,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         init_me();
         init_other();
     }
-    private void getinfo(){
-        connection= SQLUtil.openConnection();
 
-        String sql="select image from user where username='"+username+"'";
-        resultSet=SQLUtil.query(connection,sql);
-        if(resultSet==null) {
-            //Toast.makeText(MainActivity, "不存在此用户名", Toast.LENGTH_SHORT).show();
-            Log.d("sql","location查询结果为空");
-            return ;
-        }else{
-            Log.d("sql","location ok!");
-        }
-
-        try {
-
-            String imagestring=resultSet.getString("image");
-            image_bitmap=stringToBitmap(imagestring);
-            Message message = new Message();
-            message.what = 1;
-            // 发送消息到消息队列中
-            handler.sendMessage(message);
-
-        } catch (SQLException e) {
-            Message message = new Message();
-            message.what = -1;
-            handler.sendMessage(message);
-            e.printStackTrace();
-            e.printStackTrace();
-        }
-
-
-
-    }
     // Handler异步方式下载图片
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -274,10 +262,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        cView.setDegree(event.values[0]);
-        ori=event.values[0];
+//        cView.setDegree(event.values[0]);
         neighborloc();
-        cView.setLoca_indo(this.locainfo_other);
+
+//        cView.setLoca_indo(this.locainfo_other);
     }
 
     @Override
@@ -288,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        sManager.unregisterListener(this);
+//        sManager.unregisterListener(this);
     }
 
     @Override
