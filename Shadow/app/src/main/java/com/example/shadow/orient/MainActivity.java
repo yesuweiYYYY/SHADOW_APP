@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private ArrayList<localtion> locainfo_other=new ArrayList<localtion>();
     private boolean locainfoupdate=false;
     private float ori=0;
+    private int dfn =0;
     Bitmap image_bitmap;
     private int view_width=0,view_height=0;
     @Override
@@ -77,7 +78,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         init();
 //       ?
         cView = new CompassView(MainActivity.this);
-
         cView.setUsername(username);
         cView.post(new Runnable() {
             @Override
@@ -87,13 +87,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 Log.d("wwwwwwwwwwwwww",view_width+"       "+view_height);
             }
         });
+        LinearLayout ll = (LinearLayout)findViewById(R.id.container);
+        ll.addView(cView);
 //  ?
         sManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         mSensorOrientation = sManager.getDefaultSensor(Sensor.TYPE_ORIENTATION);
         sManager.registerListener(this, mSensorOrientation, SensorManager.SENSOR_DELAY_UI);
 
-        LinearLayout ll = (LinearLayout)findViewById(R.id.container);
-        ll.addView(cView);
+
 
 //          setContentView(cView);
 
@@ -127,12 +128,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
     public void init_other(){
         HTTPUtil tmp_http= new HTTPUtil();
-
         data_struct.localtion[] other_loc = tmp_http.init_other(username);
 
-//        locainfo_other.clear();
+        locainfo_other.clear();
         for(data_struct.localtion i:other_loc){
-            xs.add(i.x);ys.add(i.y);
             locainfo_other.add(i);
         }
         locainfoupdate=false;
@@ -237,17 +236,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         location[1]=view_height;
 
 
-
-
         if(!locainfoupdate){
             locainfoupdate=true;
-
             for(localtion i:locainfo_other){
                 Log.d("ssssssssssssssize", "   num"+"  "+i.x+"   "+i.y);
                 i.x=(i.x)*100+location[0];
                 i.y=location[1]-i.y*100;
                 double t=i.x;i.x=i.y;i.y=t;
-                Log.d("ssssssssssssssize", "   num"+"  "+i.x+"   "+i.y);
             }
         }
         for(localtion i:locainfo_other)
@@ -273,11 +268,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        dfn++;
+        if(dfn%20==0){
 
-        cView.setDegree(event.values[0]);
-        ori=event.values[0];
+            Log.d("onSensorChanged","dfn"+String.valueOf(dfn));
+            init_other();
+            cView.setLoca_indo(this.locainfo_other);
+            cView.invalidate();
+        }
+
+//        cView.setDegree(event.values[0]);
+//        ori=event.values[0];
         neighborloc();
-        cView.setLoca_indo(this.locainfo_other);
+
     }
 
     @Override
