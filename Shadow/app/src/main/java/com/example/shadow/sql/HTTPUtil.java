@@ -199,7 +199,7 @@ public class HTTPUtil {
         return locations_res;
     }
 
-    // 返回个人消息
+// 返回个人消息
     public  User info(String username){
         OkHttpClient client = new OkHttpClient();
         FormBody.Builder formBuilder= new FormBody.Builder();
