@@ -103,8 +103,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void init(){
         //得到指向标位置
 //        ImageView t = null;
-//        t = (ImageView)findViewById(R.id.beacon_icon);
- //       int[] location = new int[2];
+//        t = (ImageView)findViewById(R.id.beacon_icon);//       int[] location = new int[2];
 //        t.getLocationOnScreen(location);
 
         ShadowApplication app=(ShadowApplication)getApplication();
@@ -222,7 +221,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         return bitmap;
 
     }
-//    //100像素1m
+   //100像素1m
 
     //左右五米，前方16m
     private void neighborloc(){
@@ -269,8 +268,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     @Override
     public void onSensorChanged(SensorEvent event) {
         dfn++;
-        if(dfn%20==0){
-
+        if(dfn%100==0){
             Log.d("onSensorChanged","dfn"+String.valueOf(dfn));
             init_other();
             cView.setLoca_indo(this.locainfo_other);
