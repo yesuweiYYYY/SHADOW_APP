@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         // 基站
         ImageView base_station=new ImageView(MainActivity.this);
         base_station.setImageResource(R.mipmap.base);
-        LP.rowSpec=GridLayout.spec(0);LP.columnSpec=GridLayout.spec(9);
+        LP.rowSpec = GridLayout.spec(0);LP.columnSpec=GridLayout.spec(9);
         base_station.setLayoutParams(LP);
         container.addView(base_station);
         int[][] vis=new int[13][9];
@@ -102,10 +102,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                         bt.setBackgroundResource(R.drawable.shape_circle_blue);
                         bt.setText(locainfo_other.get(vis[i][j]).username.substring(0,1));
                     }
+                    int finalI = i;
+                    int finalJ = j;
                     bt.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
                             Intent intent0=new Intent(MainActivity.this,Getinfo.class);
+                            intent0.putExtra("username",locainfo_other.get(vis[finalI][finalJ]).username);
                             startActivity(intent0);
                         }
                     });

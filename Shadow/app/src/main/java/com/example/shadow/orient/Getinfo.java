@@ -85,7 +85,7 @@ public class Getinfo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
-        init();
+        username = getIntent().getStringExtra("username");
         new Thread(runnable).start();
 
 
