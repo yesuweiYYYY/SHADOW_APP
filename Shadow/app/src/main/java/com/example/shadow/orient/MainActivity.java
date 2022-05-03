@@ -23,15 +23,21 @@ import com.example.shadow.Log_register.Register_activity;
 import com.example.shadow.R;
 import com.example.shadow.ShadowApplication;
 import com.example.shadow.sql.HTTPUtil;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMOptions;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import data_struct.*;
 
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener,View.OnClickListener {
 
-    private String username="11";
+    private String username="2";
 
     private ArrayList<localtion> locainfo_other=new ArrayList<localtion>();
     private localtion localtion_me=new localtion();
@@ -39,36 +45,62 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private boolean locainfoupdate=false;
     Bitmap image_bitmap;
     private int view_width=0,view_height=0;
+    //页面旋转角度 支持 [0,1,2,3] 对应 [0,90,180,270]
+    private int viewtr =1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init_main_layout();
+
+//        setContent(bt);
+//        contain.addView(testImageView);
+
+    }
+    protected void init_main_layout(){
+        Log.d("init_main_layout","tr:"+String.valueOf(viewtr));
         setContentView(R.layout.main_layout);
         locainfoupdate=false;
         init();
+        init_gridlayout();
+        Button bt=findViewById(R.id.spin_bt);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                viewtr=(viewtr+1)%4;
+                init_main_layout();
+            }
+        });
+    }
 
-
+    protected void init_gridlayout(){
         // 初始化布局
         // 容器
         GridLayout container =findViewById(R.id.container);
         // layout 配置器
         GridLayout.LayoutParams LP=new GridLayout.LayoutParams();
-        LP.height=150;
-        LP.width=150;
+        LP.height=150;LP.width=150;
+
+        // 绘制 图片
         // 基站
         ImageView base_station=new ImageView(MainActivity.this);
         base_station.setImageResource(R.mipmap.base);
-        LP.rowSpec = GridLayout.spec(0);LP.columnSpec=GridLayout.spec(9);
+        if(viewtr==0){ LP.rowSpec = GridLayout.spec(0);LP.columnSpec=GridLayout.spec(9); }
+        else if(viewtr==1){ LP.rowSpec = GridLayout.spec(9);LP.columnSpec=GridLayout.spec(9); }
+        else if(viewtr==2){ LP.rowSpec = GridLayout.spec(9);LP.columnSpec=GridLayout.spec(0); }
+        else if(viewtr==3){ LP.rowSpec = GridLayout.spec(0);LP.columnSpec=GridLayout.spec(0); }
         base_station.setLayoutParams(LP);
         container.addView(base_station);
         int[][] vis=new int[13][9];
         for(int i=0;i<13;i++)for(int j=0;j<9;j++)vis[i][j]=-1;
-
         for(int i=0;i<locainfo_other.size();i++){
             int x=(int)(Math.round(locainfo_other.get(i).x));
             int y=(int)(Math.round(locainfo_other.get(i).y));
             Log.d("locations:","x-"+String.valueOf(x)+",y-"+String.valueOf(y));
             if(x>=0&&x<9&&y>=0&&y<=9){
-                vis[x][y]=i;
+                if(viewtr==0)vis[x][y]=i;
+                else if(viewtr==1)vis[y][9-x]=i;
+                else if(viewtr==2)vis[9-x][9-y]=i;
+                else if(viewtr==3)vis[9-y][x]=i;
             }
 
         }
@@ -76,7 +108,12 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         {
             int x=(int)(Math.round(localtion_me.x));
             int y=(int)(Math.round(localtion_me.y));
-            if(x>=0&&x<9&&y>=0&&y<=9) vis[x][y]=-2;
+            if(x>=0&&x<9&&y>=0&&y<=9) {
+                if(viewtr==0)vis[x][y]=-2;
+                else if(viewtr==1)vis[y][9-x]=-2;
+                else if(viewtr==2)vis[9-x][9-y]=-2;
+                else if(viewtr==3)vis[9-y][x]=-2;
+            }
         }
 
         for(int i=1;i<10;i++){
@@ -118,13 +155,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 container.addView(bt);
             }
         }
-
-
-
-
-//        setContent(bt);
-//        contain.addView(testImageView);
-
     }
 
     public void init(){
@@ -155,7 +185,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         HTTPUtil tmp_http= new HTTPUtil();
 
         data_struct.localtion[] other_loc = tmp_http.init_other(username);
-
 //        locainfo_other.clear();
         for(data_struct.localtion i:other_loc){
             Log.d("init_other",i.toString());
@@ -245,20 +274,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             Log.d("ssssssssssssssize", "   num"+"  "+i.x+"   "+i.y);
 
 
-//        locofphone.clear();
-//        for(int i=0;i<xs.size();i++){
-//            double[] d = new double[2];
-//            Log.d("ssssssssssssssize2", "   num"+"  "+xs.get(i)+"   "+ys.get(i));
-//            d[1]=(xs.get(i))*100+location[0];
-//            d[0]=location[1]-(ys.get(i))*100;
-//            if(d[1]>0){
-//                locofphone.add(d);
-//                Log.d("ssssssssssssssize2", "   num"+"  "+d[0]+"   "+d[1]);
-//            }
-//        }
-
-
-
     }
 
 
@@ -284,14 +299,19 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onClick(View view) {
+        Log.d("onClick","click_id:"+String.valueOf(view.getId()));
         switch (view.getId()){
             case R.id.main_getinfo:
                     Intent intent0=new Intent(MainActivity.this,Getinfo.class);
                     startActivity(intent0);
                 break;
             case R.id.main_setinfo:
-                Intent intent =new Intent(MainActivity.this, Register_activity.class);
-                startActivity(intent);
+                    Intent intent =new Intent(MainActivity.this, Register_activity.class);
+                    startActivity(intent);
+                break;
+            case R.id.spin_bt:
+                    viewtr=(viewtr+1)%4;
+//                    init_main_layout();
                 break;
         }
     }

@@ -52,12 +52,27 @@
         android:layout_height="wrap_content"
         android:rowCount="15"
         android:columnCount="10"
-        android:layout_weight="10">
+        android:layout_weight="15">
 
 
 
     </GridLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="horizontal"
+        >
+
+        <Button
+            android:id="@+id/spin_bt"
+            android:layout_width="135dp"
+            android:layout_height="50dp"
+            android:text="旋转视角">
+
+        </Button>
+    </LinearLayout>
 
 
 
