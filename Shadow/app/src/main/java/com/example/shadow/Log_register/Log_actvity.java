@@ -25,6 +25,7 @@ import java.sql.SQLException;
 
 import okhttp3.*;
 
+import com.example.shadow.EM.*;
 
 
 public class Log_actvity extends AppCompatActivity implements View.OnClickListener{
@@ -47,7 +48,7 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
     // 底部弹窗
     private void ToastmakeText(String str){
         Looper.prepare();
-        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
         Looper.loop();
         return ;
     }
@@ -55,6 +56,9 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         // 元素绑定
         super.onCreate(savedInstanceState);
+        // EM 绑定 appkey
+        tool.init(Log_actvity.this);
+
         setContentView(R.layout.login);
         register= (Button) findViewById(R.id.register_btn);
         log= (Button) findViewById(R.id.log_btn);
@@ -75,6 +79,7 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
         Log.d("LOGIN:",String.valueOf(res_flag));
         if(res_flag==1){
             //开启新的app
+//            Toast.makeText(Log_actvity.this, "登录成功",Toast.LENGTH_SHORT).show();
             app= (ShadowApplication) getApplication();
             app.setUsername(username);
             //下面不知道噶干嘛的
@@ -83,9 +88,9 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
             // 发送消息到消息队列中
             handler.sendMessage(message);
         }else if(res_flag == 2){
-            ToastmakeText("密码错误");
+//            Toast.makeText(Log_actvity.this, "密码错误",Toast.LENGTH_SHORT).show();
         }else if(res_flag == 3){
-            ToastmakeText("没有此用户");
+//            Toast.makeText(Log_actvity.this, "没有此用户",Toast.LENGTH_SHORT).show();
         }
 
     }
@@ -96,8 +101,6 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
         // 登录验证
         String url = "http://10.0.2.2:5000/user";
         getCheckFromServer(url);
-
-
     }
     // Handler异步方式下载图片
     private Handler handler = new Handler() {
@@ -105,6 +108,9 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
             switch (msg.what) {
                 case 1:
                     // 下载成功
+                    tool.setUsername(username);
+                    tool.setPassword(password);
+                    tool.log();
                     Intent intent0=new Intent(Log_actvity.this,com.example.shadow.orient.MainActivity.class);
                     startActivity(intent0);
 
@@ -128,4 +134,5 @@ public class Log_actvity extends AppCompatActivity implements View.OnClickListen
                 break;
         }
     }
+
 }

@@ -61,6 +61,9 @@ import java.util.TimerTask;
 import data_struct.User;
 import okhttp3.*;
 
+//EM
+import com.example.shadow.EM.*;
+import com.hyphenate.exceptions.HyphenateException;
 
 public class Register_activity extends AppCompatActivity implements View.OnClickListener{
     // 一些参数
@@ -79,7 +82,7 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
     //用于存储临时照片
     private int index,width=500,height=650;
     private ImageView head;
-    private String image;
+    private String image="";
 
     private static final int PERMISSION_REQUEST = 1001;
 
@@ -105,6 +108,7 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
             Looper.loop();
         }
     };
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
@@ -117,13 +121,13 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
             public void onClick(View v) {
                 register();
                 if(pass){
-                    Log.d("registerok","注册成功");
+                    Log.d("register_ok","注册成功");
                     // 不知道干嘛的
                     Intent intent=new Intent(Register_activity.this,MainActivity.class);
                     intent.putExtra("username",myuser.getUsername());
                     startActivity(intent);
                 }else{
-                    Log.d("registerfail","注册失败");
+                    Log.d("register_fail","注册失败");
                 };
 
             }
@@ -171,15 +175,15 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
         myuser = new User(
                 ( (EditText) findViewById(R.id.regusername_text)      ).getText().toString(),
                 ((EditText) findViewById(R.id.regpassword_text)       ).getText().toString(),
-//
+
                 sex,
-//
+
                 ( (EditText) findViewById(R.id.regage_text)           ).getText().toString(),
                 (  (EditText) findViewById(R.id.regphone_text)        ).getText().toString(),
                 ( (TextView)findViewById(R.id.description)            ).getText().toString(),
-//
+
                 image
-//
+
         );
 
         String password0=( (EditText) findViewById(R.id.regpassword0_text) ).getText().toString();
@@ -201,13 +205,19 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
 
 
     }
-    private void reg(){
-        User _user = myuser;
+    private void reg() {
+        User _myuser=myuser;
         HTTPUtil _httplog = new HTTPUtil();
-        int res = _httplog.register(_user);
+        int res = _httplog.register(_myuser);
         Log.d("resgister:",String.valueOf(res));
         if(res == 1){
             pass=true;
+//reg_in_EM
+            try {
+                tool.addClient(myuser.username,myuser.password);
+            } catch (HyphenateException e) {
+                e.printStackTrace();
+            }
             ToastmakeText("注册成功");
             //1.5秒后跳转活动
             TimerTask task = new TimerTask() {

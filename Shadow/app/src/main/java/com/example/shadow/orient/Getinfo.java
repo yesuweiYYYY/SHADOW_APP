@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.shadow.EM.tool;
+import com.example.shadow.Log_register.Register_activity;
 import com.example.shadow.MainActivity;
 import com.example.shadow.R;
 import com.example.shadow.ShadowApplication;
@@ -52,6 +54,7 @@ import android.widget.Toast;
 import com.example.shadow.MainActivity;
 import com.example.shadow.R;
 import com.example.shadow.sql.SQLUtil;
+import com.hyphenate.exceptions.HyphenateException;
 
 import java.sql.Connection;
 import java.util.Timer;
@@ -86,9 +89,18 @@ public class Getinfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
         username = getIntent().getStringExtra("username");
+        Button bt = findViewById(R.id.friend_add);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    tool.freind_add(username);
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
         new Thread(runnable).start();
-
-
     }
     private void init(){
         ShadowApplication app=(ShadowApplication)getApplication();
@@ -113,6 +125,7 @@ public class Getinfo extends AppCompatActivity {
 
 
     }
+
     // Handler异步方式下载图片
     private Handler handler = new Handler() {
         public void handleMessage(android.os.Message msg) {
@@ -162,5 +175,19 @@ public class Getinfo extends AppCompatActivity {
 
     }
 
+
+//    @Override
+//    public void onClick(View view) {
+//        Log.d("onClick","click_id:"+String.valueOf(view.getId()));
+//        switch (view.getId()){
+//            case R.id.friend_add:
+//                try {
+//                    tool.freind_add(username);
+//                } catch (HyphenateException e) {
+//                    e.printStackTrace();
+//                }
+//                break;
+//        }
+//    }
 
 }
