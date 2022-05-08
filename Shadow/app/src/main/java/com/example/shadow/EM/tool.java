@@ -6,6 +6,7 @@ import android.util.Log;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMOptions;
+import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.exceptions.HyphenateException;
 
 import data_struct.User;
@@ -17,7 +18,11 @@ public class tool {
     public static void init(Context context){
         EMOptions options = new EMOptions();
         options.setAppKey(Appkey);
-        EMClient.getInstance().init(context, options);
+        if(EaseIM.getInstance().init(context, options)){
+            //在做打包混淆时，关闭debug模式，避免消耗不必要的资源
+            EMClient.getInstance().setDebugMode(true);
+            //EaseIM初始化成功之后再去调用注册消息监听的代码 ...
+        }
     }
     public static void setUsername(String str){ Username=str; }
     public static void setPassword(String str){ password=str; }

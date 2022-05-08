@@ -25,6 +25,7 @@ import com.example.shadow.Log_register.Register_activity;
 import com.example.shadow.MainActivity;
 import com.example.shadow.R;
 import com.example.shadow.ShadowApplication;
+import com.example.shadow.setction.chat.ChatActivity;
 import com.example.shadow.sql.HTTPUtil;
 import com.example.shadow.sql.SQLUtil;
 
@@ -89,6 +90,12 @@ public class Getinfo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.info);
         username = getIntent().getStringExtra("username");
+        init_buttun();
+
+        new Thread(runnable).start();
+    }
+    /*设置按钮功能*/
+    private void init_buttun(){
         Button bt = findViewById(R.id.friend_add);
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,11 +107,17 @@ public class Getinfo extends AppCompatActivity {
                 }
             }
         });
-        new Thread(runnable).start();
-    }
-    private void init(){
-        ShadowApplication app=(ShadowApplication)getApplication();
-        username=app.getUsername();
+
+        Button bt2 = findViewById(R.id.start_chat);
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Getinfo.this, ChatActivity.class);
+                intent.putExtra("conversationId",username);
+                intent.putExtra("chatType",1);
+                startActivity(intent);
+            }
+        });
     }
     private void setText(){
         Log.d("info","setText");
@@ -155,7 +168,7 @@ public class Getinfo extends AppCompatActivity {
             message.what = 1;
             // 发送消息到消息队列中
             handler.sendMessage(message);
-        setText();
+            setText();
 
 
     }

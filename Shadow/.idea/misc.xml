@@ -12,6 +12,7 @@
         <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/map.xml" value="0.20364583333333333" />
         <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/popupwindow_photo_style_layout.xml" value="0.20923913043478262" />
         <entry key="..\:/AndroidProject/Shadow/app/src/main/res/layout/register.xml" value="0.3458333333333333" />
+        <entry key="..\:/Users/11631/.gradle/caches/transforms-3/bfcbf161df86e8959e8196b0cb0afd0e/transformed/appcompat-1.2.0/res/drawable/abc_ic_ab_back_material.xml" value="0.241" />
         <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/activity_main.xml" value="0.21603260869565216" />
         <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/info.xml" value="0.17806484295845998" />
         <entry key="..\:/Users/11631/Desktop/ryxs/Shadow/Shadow/app/src/main/res/layout/login.xml" value="0.17806484295845998" />
@@ -30,7 +31,11 @@
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/drawable/shape_circle.xml" value="0.1885" />
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/drawable/shape_circle_green.xml" value="0.2145" />
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/drawable/textview_border.xml" value="0.254" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/abc_ic_ab_back_material.xml" value="0.23489583333333333" />
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/activity_main.xml" value="0.2526041666666667" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/chat_fragment.xml" value="0.31614583333333335" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/compass_fragment.xml" value="0.19293478260869565" />
+        <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/demo_activity_chat.xml" value="0.2359375" />
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/info.xml" value="0.6251728907330567" />
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/layout/main_layout.xml" value="0.22" />
         <entry key="..\:/Users/11631/Desktop/ryxs/ryxs/Shadow2/Shadow/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.254" />

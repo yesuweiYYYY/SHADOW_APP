@@ -46,6 +46,11 @@
             android:text="修改信息" />
     </LinearLayout>
 
+<!--    <fragment-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="15">-->
+<!--        ></fragment>-->
     <GridLayout
         android:id="@+id/container"
         android:layout_width="wrap_content"
@@ -53,15 +58,12 @@
         android:rowCount="15"
         android:columnCount="10"
         android:layout_weight="15">
-
-
-
     </GridLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="2"
         android:orientation="horizontal"
         >
 

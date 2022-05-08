@@ -123,6 +123,8 @@
         <activity android:name=".Log_register.Register_activity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".orient.Getinfo"/>
+        <activity android:name=".setction.base.BaseInitActivity" />
+        <activity android:name=".setction.chat.ChatActivity" />
 
     </application>
 
