@@ -71,7 +71,7 @@ public class Getinfo extends AppCompatActivity {
     private EditText info_sex;
     private TextView info_description;
     private ImageView info_personal_icon;
-    private ResultSet resultSet;
+
     User user;
     String username;
     Bitmap image_bitmap;
@@ -88,8 +88,13 @@ public class Getinfo extends AppCompatActivity {
     };
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.info);
+
         username = getIntent().getStringExtra("username");
+        if(getIntent().getStringExtra("own_flag").equals("1"))
+            setContentView(R.layout.info);
+        else
+            setContentView(R.layout.info);
+
         init_buttun();
 
         new Thread(runnable).start();
@@ -132,8 +137,8 @@ public class Getinfo extends AppCompatActivity {
         info_sex.setText(user.sex);
         info_description=(TextView)findViewById(R.id.info_description) ;
         info_description.setText(user.descrption);
-        info_personal_icon=(ImageView)findViewById(R.id.info_personal_icon);
-        info_personal_icon.setImageBitmap(image_bitmap);
+//        info_personal_icon=(ImageView)findViewById(R.id.info_personal_icon);
+//        info_personal_icon.setImageBitmap(image_bitmap);
 
 
 
@@ -147,9 +152,9 @@ public class Getinfo extends AppCompatActivity {
                 case 1:
                     // 下载成功
 
-                    imageView = (ImageView) findViewById(R.id.info_personal_icon);
-
-                    imageView.setImageBitmap(image_bitmap);
+//                    imageView = (ImageView) findViewById(R.id.info_personal_icon);
+//
+//                    imageView.setImageBitmap(image_bitmap);
 
                     break;
                 case -1:

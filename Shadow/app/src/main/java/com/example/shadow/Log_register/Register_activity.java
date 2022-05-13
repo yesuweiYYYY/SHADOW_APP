@@ -99,8 +99,8 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
 
 
 
-    //开一个链接线程
-    private Runnable runnable=new Runnable() {
+    //注册 运行对象
+    private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             Looper.prepare();
@@ -111,10 +111,10 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.register);
 
+        setContentView(R.layout.register);
         head=(ImageView) findViewById(R.id.iv_personal_icon);//头像
-        head.setOnClickListener(this);//
+        head.setOnClickListener(this);
         ok= (Button) findViewById(R.id.regok);
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,30 +122,29 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
                 register();
                 if(pass){
                     Log.d("register_ok","注册成功");
-                    // 不知道干嘛的
+
+                    Toast.makeText(Register_activity.this,"注册成功",Toast.LENGTH_SHORT).show();
+
                     Intent intent=new Intent(Register_activity.this,MainActivity.class);
                     intent.putExtra("username",myuser.getUsername());
                     startActivity(intent);
                 }else{
                     Log.d("register_fail","注册失败");
-                };
+                    Toast.makeText(Register_activity.this,"注册失败",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
 
     }
-    private void ToastmakeText(String str){
-//        Looper.prepare();
-//        Toast.makeText(getApplicationContext(), str, Toast.LENGTH_SHORT).show();
-//        Looper.loop();
-        return ;
-    }
+
     /**
      * 权限回调,
      * @param requestCode
      * @param permissions
      * @param grantResults
      */
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -157,6 +156,7 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
                 break;
         }
     }
+
 
     private void register(){
         // 数据绑定
@@ -218,7 +218,8 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
             } catch (HyphenateException e) {
                 e.printStackTrace();
             }
-            ToastmakeText("注册成功");
+            Toast.makeText(Register_activity.this, "注册成功",Toast.LENGTH_SHORT).show();
+
             //1.5秒后跳转活动
             TimerTask task = new TimerTask() {
                 @Override
@@ -229,9 +230,8 @@ public class Register_activity extends AppCompatActivity implements View.OnClick
             Timer timer = new Timer();
             timer.schedule(task, 1500);//1.5秒后执行TimeTask的run方法
         }else if(res == 2){
-            ToastmakeText("注册失败,账户已存在");
+            Toast.makeText(Register_activity.this, "注册失败,账户已存在",Toast.LENGTH_SHORT).show();
         }
-
     }
 
     @Override

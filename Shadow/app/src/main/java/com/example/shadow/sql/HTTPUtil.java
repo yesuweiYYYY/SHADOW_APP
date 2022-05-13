@@ -20,10 +20,9 @@ public class HTTPUtil {
 //    private static final String host_URL = host_URL+"";
     private static final String host_URL = "http://120.26.86.113:5000/";
 
-    String res;
-    public int int_res;
-    public localtion[] locations_res;
-    public User[] user_res;
+    public static int int_res;
+    public static localtion[] locations_res;
+    public static User[] user_res;
 // 登录
     public int log(String username,String password){
         OkHttpClient client = new OkHttpClient();
@@ -35,6 +34,7 @@ public class HTTPUtil {
 
 
         Call call = client.newCall(request);
+        int_res = 4;
         call.enqueue(new Callback() {
             //没有收到服务器应答
             @Override
@@ -50,7 +50,7 @@ public class HTTPUtil {
                     Log.d("info_OKP_login", headers.name(i) + ":" + headers.value(i));
                 }
 
-                // res 是一个字符 1:成功 2:密码不正确 3.没有用户名
+                // res 是一个字符 1 成功 2 不存在用户名 3 密码错误 4 服务器链接失败
                 final String res = response.body().string();
                 Log.d("info_OKP_login", "onFailure: " +res);
                 if(res.equals("1")){//登陆成功

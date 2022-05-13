@@ -141,14 +141,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     }
                     int finalI = i;
                     int finalJ = j;
-                    bt.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent0=new Intent(MainActivity.this,Getinfo.class);
-                            intent0.putExtra("username",locainfo_other.get(vis[finalI][finalJ]).username);
-                            startActivity(intent0);
-                        }
-                    });
+                    if(vis[i][j]!=-2){
+                        bt.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                Intent intent0=new Intent(MainActivity.this,Getinfo.class);
+                                intent0.putExtra("username",locainfo_other.get(vis[finalI][finalJ]).username);
+                                intent0.putExtra("own_flag","1");
+                                startActivity(intent0);
+                            }
+                        });
+
+                    }
 
                 }
 
@@ -302,8 +306,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Log.d("onClick","click_id:"+String.valueOf(view.getId()));
         switch (view.getId()){
             case R.id.main_getinfo:
-                    Intent intent0=new Intent(MainActivity.this,Getinfo.class);
-                    startActivity(intent0);
+                Intent intent0=new Intent(MainActivity.this,Getinfo.class);
+                intent0.putExtra("username",username);
+                intent0.putExtra("own_flag","1");
+                startActivity(intent0);
                 break;
             case R.id.main_setinfo:
                     Intent intent =new Intent(MainActivity.this, Register_activity.class);

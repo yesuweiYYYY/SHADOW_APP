@@ -17,7 +17,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle arg0) {
         super.onCreate(arg0);
         setContentView(R.layout.demo_activity_chat);
-        
+
         EaseChatFragment chatFragment;
         chatFragment = new EaseChatFragment();
         chatFragment.setArguments(getIntent().getExtras());
