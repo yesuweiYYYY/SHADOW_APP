@@ -74,6 +74,13 @@
             android:text="旋转视角">
 
         </Button>
+
+        <Button
+            android:id="@+id/ConversationList_bt"
+            android:layout_width="135dp"
+            android:layout_height="50dp"
+            android:text="会话列表">
+        </Button>
     </LinearLayout>
 
 

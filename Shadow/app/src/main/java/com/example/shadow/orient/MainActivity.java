@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.shadow.Log_register.Register_activity;
 import com.example.shadow.R;
 import com.example.shadow.ShadowApplication;
+import com.example.shadow.setction.chat.ChatActivity;
+import com.example.shadow.setction.chat.ConversationListActivity;
 import com.example.shadow.sql.HTTPUtil;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -51,11 +53,11 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init_main_layout();
-
 //        setContent(bt);
 //        contain.addView(testImageView);
 
     }
+
     protected void init_main_layout(){
         Log.d("init_main_layout","tr:"+String.valueOf(viewtr));
         setContentView(R.layout.main_layout);
@@ -68,6 +70,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             public void onClick(View view) {
                 viewtr=(viewtr+1)%4;
                 init_main_layout();
+            }
+        });
+
+        Button bt2 = findViewById(R.id.ConversationList_bt);
+        bt2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ConversationListActivity.class);
+
+                startActivity(intent);
             }
         });
     }

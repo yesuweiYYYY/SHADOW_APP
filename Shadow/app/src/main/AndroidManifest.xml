@@ -125,7 +125,7 @@
         <activity android:name=".orient.Getinfo"/>
         <activity android:name=".setction.base.BaseInitActivity" />
         <activity android:name=".setction.chat.ChatActivity" />
-
+        <activity android:name=".setction.chat.ConversationListActivity" />
     </application>
 
 </manifest>
