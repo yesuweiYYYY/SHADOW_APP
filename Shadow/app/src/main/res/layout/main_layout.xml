@@ -81,6 +81,13 @@
             android:layout_height="50dp"
             android:text="会话列表">
         </Button>
+
+        <Button
+            android:id="@+id/ChattingRoom_bt"
+            android:layout_width="135dp"
+            android:layout_height="50dp"
+            android:text="聊天室">
+        </Button>
     </LinearLayout>
 
 

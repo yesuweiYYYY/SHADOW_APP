@@ -82,6 +82,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 startActivity(intent);
             }
         });
+
+        Button bt3 = findViewById(R.id.ChattingRoom_bt);
+        bt3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, ChatActivity.class);
+                intent.putExtra("conversationId","182368431308801");
+                intent.putExtra("chatType",2);
+                startActivity(intent);
+            }
+        });
     }
 
     protected void init_gridlayout(){
